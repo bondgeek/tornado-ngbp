@@ -1,0 +1,6 @@
+{
+  "generator-ngbp": {
+    "projectName": "tornado-ngbp",
+    "useCoffeescript": false
+  }
+}

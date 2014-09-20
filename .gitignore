@@ -1,0 +1,36 @@
+# general
+*.sw*
+
+# ngbp
+dist/
+build/
+bin/
+node_modules/
+vendor/
+
+# ignore compiled python /cython files
+*.pyc
+*.pyd
+
+# ignore virtualenv path
+env/
+
+# ignore objects and archives
+*.[oa]
+*.so
+build/
+
+# ignore project director for espresso editor
+*.esproj
+
+# ignore eclipse / pydev / pycharm project files
+.project
+.pydevproject
+.idea
+.settings
+
+# system files / osx noise
+.DS_Store
+
+# logfiles
+*.log

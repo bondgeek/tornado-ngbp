@@ -1,0 +1,7 @@
+Jinja2==2.7.1
+MarkupSafe==0.18
+mock==1.0.1
+requests==1.2.3
+tornado==3.1
+wsgiref==0.1.2
+python-dateutil==2.1
