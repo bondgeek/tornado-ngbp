@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ static_url("css/style.css") }}" type="text/css"/>
+  {% block extracss %}{% endblock extracss %}
+</head>
+<body data-mpkey="{[{ global_env.mixpanel_api_key }]}">
+{% block js_sdk %} {% endblock js_sdk %}
+{% block header %}{% endblock header %}
+{% block content %}{% endblock content %}
+{% block footer %}{% endblock footer %}
+{% block extramodals %} {% endblock extramodals %}
+{% block basejs %} {% endblock basejs %}
+{% block extrajs %} {% endblock extrajs %}
+</body>
+</html>

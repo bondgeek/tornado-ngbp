@@ -6,13 +6,14 @@
     <!-- font awesome from BootstrapCDN -->
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
+    <!-- Local static files are served by tornado's `static_url` -->
     <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
-    <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
+    <link rel="stylesheet" type="text/css" href="{[{ static_url('<%= file %>') }]}" /><% }); %>
 
     <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
-    <script type="text/javascript" src="<%= file %>"></script><% }); %>
+    <script type="text/javascript" src="{[{ static_url('<%= file %>') }]}"></script><% }); %>
 </head>
-<body>
+<body data-mpkey="{[{ global_env.mixpanel_api_key }]}">
     <header>
         <nav class="container navbar-default">
             <ul class="nav navbar-nav">

@@ -1,11 +1,8 @@
 __author__ = 'bondgeek'
-
 import json
 import tornado
 
-from jinja2 import Environment, PackageLoader
-
-import webserver.cookie as cookie
+from jinja2 import Environment, FileSystemLoader, ChoiceLoader
 
 import settings
 
@@ -13,9 +10,22 @@ import settings
 class BaseHandler(tornado.web.RequestHandler):
     template_name = 'base.html'
     login_href = '/'
-    error_template = 'error.html'
+    error_template = 'baseerror.html'
 
-    env = Environment(loader=PackageLoader('shared', 'templates'))
+    # the template tags to avoid conflicts with angularjs
+    env = Environment(loader=ChoiceLoader([
+            FileSystemLoader(settings.CLIENT_PATH),
+            FileSystemLoader(settings.TEMPLATE_PATH),
+        ]),
+        variable_start_string="{[{",
+        variable_end_string="}]}"
+    )
+
+    def load_cookie(self):
+        cookie = self.get_secure_cookie(settings.COOKIE_NAME)
+        if cookie:
+            return json.loads(cookie)
+        return {}
 
     def get_current_user(self):
         return self.cookie.get(settings.COOKIE_USER_ID_NAME, None)
@@ -26,7 +36,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.error_template = self.env.get_template(self.error_template)
 
     def prepare(self):
-        self.cookie = cookie.from_json(self.get_secure_cookie(settings.COOKIE_NAME))
+        self.cookie = self.load_cookie()
         self.user_id = self.current_user
         self.global_env = settings.TEMPLATE_GLOBAL_ENV
 
@@ -40,7 +50,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.write(self.template.render(*args, global_env=settings.TEMPLATE_GLOBAL_ENV, **kwgs))
 
 
-class IndexHandler(BaseCustomerHandler):
+class IndexHandler(BaseHandler):
     template_name = 'index.html'
 
     def initialize(self):
@@ -49,7 +59,6 @@ class IndexHandler(BaseCustomerHandler):
     def get(self):
         if self.current_user:
             self.set_all_cookie_values(self.current_user)
-            self.redirect('/shop')
             return
         self.clear_all_cookies()
 

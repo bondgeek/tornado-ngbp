@@ -1,16 +1,16 @@
-
 import tornado.ioloop
 import tornado.web
 
 import handlers
 import settings
 
+import utils.key_generators
 
 app_config = dict(
     template_path=settings.TEMPLATE_PATH,
     static_path=settings.STATIC_PATH,
     autoescape="xhtml_escape",
-    cookie_secret=u'vdibtFYzQeiKwetyVy3wS89cnum660sMv1VVS1LyDR0=',
+    cookie_secret=utils.key_generators.cookie_secret(),
     login_url="/",
     debug=True
     )
